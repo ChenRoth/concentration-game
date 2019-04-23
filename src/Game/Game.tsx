@@ -7,6 +7,7 @@ export type CardStack = string[]; // card stack is an array of image URLs
 export interface IGameState {
   stack: CardStack;
   flippedCards: Record<number, boolean>;
+  currentFlippedCards: number[];
 }
 
 export class Game extends React.Component<any, IGameState> {
@@ -20,15 +21,21 @@ export class Game extends React.Component<any, IGameState> {
       0: true,
       2: true,
     },
+    currentFlippedCards: [],
   };
 
+  flipCard = (index: number) => this.setState({currentFlippedCards: this.state.currentFlippedCards.concat(index)});
+
   render() {
-    const {stack, flippedCards} = this.state;
+    const {stack, flippedCards, currentFlippedCards} = this.state;
     return (
       <div className="game">
         {stack.map((image, i) =>
-          <Card index={i} image={image}
-              onFlip={() => null} isFlipped={flippedCards[i]}/>
+          <Card
+            key={i}
+            index={i} image={image}
+            onFlip={this.flipCard}
+            isFlipped={flippedCards[i] || currentFlippedCards.includes(i)}/>
         )}
       </div>
     );
