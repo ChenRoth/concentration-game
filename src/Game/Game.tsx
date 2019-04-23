@@ -65,6 +65,7 @@ export class Game extends React.Component<any, IGameState> {
     return (
       <div className="game">
         <div className="points">Points: {points}</div>
+        {points === stack.length / 2 ? <div className="game-over">GAME OVER!</div> : null}
         <div className="cards">
           {stack.map((image, i) =>
             <Card
