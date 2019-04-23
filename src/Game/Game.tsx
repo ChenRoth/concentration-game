@@ -5,6 +5,7 @@ import './Game.css';
 export type CardStack = string[]; // card stack is an array of image URLs
 
 export interface IGameState {
+  points: number;
   stack: CardStack;
   flippedCards: Record<number, boolean>;
   currentFlippedCards: number[];
@@ -12,6 +13,7 @@ export interface IGameState {
 
 export class Game extends React.Component<any, IGameState> {
   state: IGameState = {
+    points: 0,
     stack: [
       'https://picsum.photos/id/1003/1181/1772',
       'https://picsum.photos/id/1002/1181/1772',
@@ -47,7 +49,8 @@ export class Game extends React.Component<any, IGameState> {
       // cards match, add them to flippedCards collection
       this.setState({
         currentFlippedCards: [],
-        flippedCards: Object.assign(this.state.flippedCards, newFlippedCards)
+        flippedCards: Object.assign(this.state.flippedCards, newFlippedCards),
+        points: this.state.points + 1,
       });
     } else {
       // cards don't match
@@ -55,19 +58,22 @@ export class Game extends React.Component<any, IGameState> {
         currentFlippedCards: []
       });
     }
-  }
+  };
 
   render() {
-    const {stack, flippedCards, currentFlippedCards} = this.state;
+    const {stack, points, flippedCards, currentFlippedCards} = this.state;
     return (
       <div className="game">
-        {stack.map((image, i) =>
-          <Card
-            key={i}
-            index={i} image={image}
-            onFlip={this.flipCard}
-            isFlipped={flippedCards[i] || currentFlippedCards.includes(i)}/>
-        )}
+        <div className="points">Points: {points}</div>
+        <div className="cards">
+          {stack.map((image, i) =>
+            <Card
+              key={i}
+              index={i} image={image}
+              onFlip={this.flipCard}
+              isFlipped={flippedCards[i] || currentFlippedCards.includes(i)}/>
+          )}
+        </div>
       </div>
     );
   }

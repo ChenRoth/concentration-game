@@ -1,4 +1,12 @@
 .game {
+  margin: 24px;
+}
+
+.points {
+  margin-bottom: 24px;
+}
+
+.cards {
   max-width: 900px;
   margin: 0 auto;
   display: flex;
