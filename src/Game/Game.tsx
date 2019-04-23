@@ -1,21 +1,30 @@
 import * as React from 'react';
 import {Card} from '../Card/Card';
+import './Game.css';
+
+export type CardStack = string[]; // card stack is an array of image URLs
 
 export interface IGameState {
-  isCardFlipped: boolean;
+  stack: CardStack;
 }
 
-export class Game extends React.Component<IGameState> {
+export class Game extends React.Component<any, IGameState> {
   state: IGameState = {
-    isCardFlipped: false,
+    stack: [
+      'https://picsum.photos/id/1003/1181/1772',
+      'https://picsum.photos/id/1002/1181/1772',
+      'https://picsum.photos/id/1003/1181/1772',
+      'https://picsum.photos/id/1002/1181/1772']
   };
 
   render() {
-    const {isCardFlipped} = this.state;
+    const {stack} = this.state;
     return (
-      <div>
-        <Card index={0} image={'https://picsum.photos/id/1003/1181/1772'}
-              onFlip={() => this.setState({isCardFlipped: true})} isFlipped={isCardFlipped}/>
+      <div className="game">
+        {stack.map((image, i) =>
+          <Card index={i} image={image}
+              onFlip={() => null} isFlipped={true}/>
+        )}
       </div>
     );
   }
