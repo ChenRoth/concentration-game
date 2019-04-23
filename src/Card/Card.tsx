@@ -14,7 +14,7 @@ export class Card extends React.Component<ICardProps> {
   render() {
     const {image, onFlip, isFlipped, index} = this.props;
     return (
-      <div className="card" onClick={() => onFlip(index)} style={{backgroundImage: `url(${isFlipped ? image : back})`}}>
+      <div className="card" onClick={() => !isFlipped && onFlip(index)} style={{backgroundImage: `url(${isFlipped ? image : back})`}}>
       </div>
     );
   }
