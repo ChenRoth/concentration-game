@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Card} from '../Card/Card';
 import './Game.css';
+import shuffle from 'lodash.shuffle';
 
 export type CardStack = string[]; // card stack is an array of image URLs
 
@@ -11,17 +12,36 @@ export interface IGameState {
   currentFlippedCards: number[];
 }
 
+
+const images = [
+  'https://picsum.photos/id/0/200/280',
+  'https://picsum.photos/id/1/200/280',
+  'https://picsum.photos/id/2/200/280',
+  'https://picsum.photos/id/3/200/280',
+  'https://picsum.photos/id/4/200/280',
+  'https://picsum.photos/id/5/200/280',
+  'https://picsum.photos/id/6/200/280',
+  'https://picsum.photos/id/7/200/280',
+  'https://picsum.photos/id/8/200/280',
+  'https://picsum.photos/id/9/200/280',
+  'https://picsum.photos/id/10/200/280',
+];
+
 export class Game extends React.Component<any, IGameState> {
-  state: IGameState = {
-    points: 0,
-    stack: [
-      'https://picsum.photos/id/1003/1181/1772',
-      'https://picsum.photos/id/1002/1181/1772',
-      'https://picsum.photos/id/1003/1181/1772',
-      'https://picsum.photos/id/1002/1181/1772'],
-    flippedCards: {},
-    currentFlippedCards: [],
-  };
+
+  constructor(props: any) {
+    super(props);
+
+    const cards = images.reduce((cards: string[], image: string) => cards.concat([image, image]), []);
+    const stack = shuffle(cards);
+
+    this.state = {
+      points: 0,
+      stack,
+      flippedCards: {},
+      currentFlippedCards: [],
+    };
+  }
 
   flipCard = (index: number) => {
     const {currentFlippedCards} = this.state;
