@@ -17,14 +17,18 @@ export class Game extends React.Component<any, IGameState> {
       'https://picsum.photos/id/1002/1181/1772',
       'https://picsum.photos/id/1003/1181/1772',
       'https://picsum.photos/id/1002/1181/1772'],
-    flippedCards: {
-      0: true,
-      2: true,
-    },
+    flippedCards: {},
     currentFlippedCards: [],
   };
 
-  flipCard = (index: number) => this.setState({currentFlippedCards: this.state.currentFlippedCards.concat(index)});
+  flipCard = (index: number) => {
+    const {currentFlippedCards} = this.state;
+    if (currentFlippedCards.length === 2) {
+      return;
+    }
+
+    this.setState({currentFlippedCards: currentFlippedCards.concat(index)});
+  };
 
   render() {
     const {stack, flippedCards, currentFlippedCards} = this.state;
